@@ -1,7 +1,7 @@
 import csv from 'csvtojson';
 import { DataType } from '../../../models/util';
 
-export const readFromFile = (dataType: DataType): any => {
+export const readFromFile = async (dataType: DataType): Promise<any> => {
   switch (dataType) {
     case DataType.JSON:
       return readFromJson();
@@ -13,7 +13,13 @@ export const readFromFile = (dataType: DataType): any => {
 };
 
 export const readFromJson = async (): Promise<any[]> => {
-  return import(`${__dirname}/../../../data/wholesaler_b.json`);
+  try {
+    const jsonData = await import(`${__dirname}/../../../data/wholesaler_b.json`);
+    return jsonData.data;
+  } catch (error) {
+    console.log('TCL: error', error);
+  }
+  return [];
 };
 
 export const readFromCsv = async (): Promise<any[]> => {
