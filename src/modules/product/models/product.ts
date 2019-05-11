@@ -10,6 +10,18 @@ export interface Product {
   baseProductQuantity: number;
 }
 
-type Packaging = 'CA' | 'BX' | 'BO';
-type BaseProductPackaging = 'BO' | 'CN';
-type BaseProductUnit = 'LT' | 'GR';
+enum Packaging{
+  CA = 'CA',
+  BX = 'BX',
+  BO = 'BO',
+}
+
+enum BaseProductPackaging{
+  BO = 'BO',
+  CN = 'CN',
+}
+
+enum BaseProductUnit{
+  LT = 'LT',
+  GR = 'GR',
+}
