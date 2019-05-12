@@ -1,5 +1,5 @@
 import { Product, Packaging, BaseProductPackaging, BaseProductUnit } from '../models/product';
-import { readFromFile } from './readFromFile';
+import { fileReaderModule } from './readFromFile';
 import { DataType } from '../models/util';
 import { JsonPackaging, JsonBaseProductPackaging } from '../models/jsonProduct';
 import { CsvBaseProductPackaging } from '../models/csvProduct';
@@ -10,8 +10,8 @@ interface IndexedProducts {
 
 export const getMappedData = async (): Promise<Product[]> => {
   const products: IndexedProducts = {};
-  const jsonData = await readFromFile(DataType.JSON);
-  const csvData = await readFromFile(DataType.CSV);
+  const jsonData = await fileReaderModule.readFromFile(DataType.JSON);
+  const csvData = await fileReaderModule.readFromFile(DataType.CSV);
 
   for (const jsonProduct of jsonData) {
     if (!jsonProduct.PRODUCT_IDENTIFIER) continue;
@@ -23,7 +23,7 @@ export const getMappedData = async (): Promise<Product[]> => {
       package: packageMapper(jsonProduct.PACKAGE),
       baseProductPackaging: baseProductPackageMapper(jsonProduct.VESSEL),
       baseProductUnit: BaseProductUnit.LT, // Need more info
-      baseProductAmount: jsonProduct.LITERS_PER_BOTTLE,
+      baseProductAmount: +(jsonProduct.LITERS_PER_BOTTLE).toFixed(2),
       baseProductQuantity: jsonProduct.BOTTLE_AMOUNT,
     };
 
@@ -40,7 +40,7 @@ export const getMappedData = async (): Promise<Product[]> => {
       package: packageMapper(csvProduct['packaging product']),
       baseProductPackaging: baseProductPackageMapper(csvProduct['packaging unit']),
       baseProductUnit: BaseProductUnit.LT, // Need more info
-      baseProductAmount: +(csvProduct['amount per unit'].slice(0, -1)),
+      baseProductAmount: +(+(csvProduct['amount per unit'].slice(0, -1))).toFixed(2),
       baseProductQuantity: csvProduct.stock,
     };
 
@@ -57,7 +57,7 @@ export const getMappedData = async (): Promise<Product[]> => {
   return Object.values(products);
 };
 
-const packageMapper = (packageType: string): Packaging => {
+export const packageMapper = (packageType: string): Packaging => {
   switch (packageType) {
     case JsonPackaging.bottle:
       return Packaging.BO;
@@ -75,7 +75,7 @@ const packageMapper = (packageType: string): Packaging => {
   }
 };
 
-const baseProductPackageMapper = (baseProductPackage: string): BaseProductPackaging => {
+export const baseProductPackageMapper = (baseProductPackage: string): BaseProductPackaging => {
   switch (baseProductPackage) {
     case JsonBaseProductPackaging.bottle:
       return BaseProductPackaging.BO;
@@ -90,7 +90,7 @@ const baseProductPackageMapper = (baseProductPackage: string): BaseProductPackag
   }
 };
 
-const populateMissedProps = (oldProduct: Product, csvProduct: Product) : Product => {
+export const populateMissedProps = (oldProduct: Product, csvProduct: Product) : Product => {
   const richProduct: Product = {
     id: oldProduct.id,
     gtin: oldProduct.gtin !== undefined ? oldProduct.gtin : csvProduct.gtin,
