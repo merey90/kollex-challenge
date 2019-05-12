@@ -9,6 +9,16 @@ systems in all kind of ways and formats - from enterprise ERP systems to modern 
 One of the essential information that is synced with the kollex platform to allow gastronomy customers ordering products 
 from their associated wholesalers is the wholesaler's product assortment.
 
+## Available Scripts
+
+### `yarn start`
+
+Runs the app in the development mode.<br>
+Open [http://localhost:5000](http://localhost:5000) to view it in the browser.
+
+### `yarn test --watch`
+
+Launches the test runner in the interactive watch mode.<br>
 
 ## Your Task
 Your task is building a small peace of software, which is able to verify and interpret assortment and product 
