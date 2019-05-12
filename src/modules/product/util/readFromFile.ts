@@ -3,18 +3,18 @@ import { DataType } from '../models/util';
 import { JsonProduct } from '../models/jsonProduct';
 import { CsvProduct } from '../models/csvProduct';
 
-export const readFromFile = async (dataType: DataType): Promise<any> => {
+const readFromFile = async (dataType: DataType): Promise<any> => {
   switch (dataType) {
     case DataType.JSON:
-      return readFromJson();
+      return fileReaderModule.readFromJson();
       break;
     default:
-      return readFromCsv();
+      return fileReaderModule.readFromCsv();
       break;
   }
 };
 
-export const readFromJson = async (): Promise<JsonProduct[]> => {
+const readFromJson = async (): Promise<JsonProduct[]> => {
   try {
     const jsonData = await import(`${__dirname}/../../../data/wholesaler_b.json`);
     return jsonData.data;
@@ -24,7 +24,7 @@ export const readFromJson = async (): Promise<JsonProduct[]> => {
   return [];
 };
 
-export const readFromCsv = async (): Promise<CsvProduct[]> => {
+const readFromCsv = async (): Promise<CsvProduct[]> => {
   try {
     return csv({ delimiter: ';' })
       .fromFile(`${__dirname}/../../../data/wholesaler_a.csv`);
@@ -32,4 +32,10 @@ export const readFromCsv = async (): Promise<CsvProduct[]> => {
     console.log('TCL: error', error);
   }
   return [];
+};
+
+export const fileReaderModule = {
+  readFromFile,
+  readFromJson,
+  readFromCsv,
 };
