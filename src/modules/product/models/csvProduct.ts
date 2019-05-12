@@ -8,8 +8,8 @@ export interface CsvProduct {
   'packaging unit': CsvBaseProductPackaging;
   'amount per unit': string;
   stock: number;
-  foo: 'string';
-  warehouse: 'string';
+  foo: string;
+  warehouse: string;
 }
 
 export enum CsvBaseProductPackaging{
