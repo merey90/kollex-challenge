@@ -1,9 +1,7 @@
 import { readFromFile } from '../util/readFromFile';
-import { DataType } from '../../../models/util';
+import { getMappedData } from '../util/getMappedData';
 
 export const getProducts = async (req, res, next) => {
-  let products = ['respond with a resource'];
-  products = await readFromFile(DataType.JSON);
-
+  const products = await getMappedData();
   res.send(products);
 };

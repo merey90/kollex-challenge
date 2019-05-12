@@ -1,27 +1,28 @@
 export interface Product {
   id: string;
-  gtin: string;
+  gtin?: string;
   manufacturer: string;
   name: string;
   package: Packaging;
   baseProductPackaging: BaseProductPackaging;
-  baseProductUnit: BaseProductUnit;
+   // TODO: remove optional param after clarification
+  baseProductUnit?: BaseProductUnit;
   baseProductAmount: number;
   baseProductQuantity: number;
 }
 
-enum Packaging{
+export enum Packaging{
   CA = 'CA',
   BX = 'BX',
   BO = 'BO',
 }
 
-enum BaseProductPackaging{
+export enum BaseProductPackaging{
   BO = 'BO',
   CN = 'CN',
 }
 
-enum BaseProductUnit{
+export enum BaseProductUnit{
   LT = 'LT',
   GR = 'GR',
 }

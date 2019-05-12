@@ -1,5 +1,6 @@
 import csv from 'csvtojson';
-import { DataType } from '../../../models/util';
+import { DataType } from '../models/util';
+import { JsonProduct } from '../models/jsonProduct';
 
 export const readFromFile = async (dataType: DataType): Promise<any> => {
   switch (dataType) {
@@ -12,7 +13,7 @@ export const readFromFile = async (dataType: DataType): Promise<any> => {
   }
 };
 
-export const readFromJson = async (): Promise<any[]> => {
+export const readFromJson = async (): Promise<JsonProduct[]> => {
   try {
     const jsonData = await import(`${__dirname}/../../../data/wholesaler_b.json`);
     return jsonData.data;
