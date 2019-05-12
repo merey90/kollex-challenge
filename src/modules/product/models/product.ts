@@ -5,8 +5,7 @@ export interface Product {
   name: string;
   package: Packaging;
   baseProductPackaging: BaseProductPackaging;
-   // TODO: remove optional param after clarification
-  baseProductUnit?: BaseProductUnit;
+  baseProductUnit: BaseProductUnit;
   baseProductAmount: number;
   baseProductQuantity: number;
 }

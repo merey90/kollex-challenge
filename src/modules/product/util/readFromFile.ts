@@ -1,6 +1,7 @@
 import csv from 'csvtojson';
 import { DataType } from '../models/util';
 import { JsonProduct } from '../models/jsonProduct';
+import { CsvProduct } from '../models/csvProduct';
 
 export const readFromFile = async (dataType: DataType): Promise<any> => {
   switch (dataType) {
@@ -23,7 +24,7 @@ export const readFromJson = async (): Promise<JsonProduct[]> => {
   return [];
 };
 
-export const readFromCsv = async (): Promise<any[]> => {
+export const readFromCsv = async (): Promise<CsvProduct[]> => {
   try {
     return csv({ delimiter: ';' })
       .fromFile(`${__dirname}/../../../data/wholesaler_a.csv`);
